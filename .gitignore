@@ -2,5 +2,6 @@
 .venv
 
 test_data.*
+*.log
 
 __pycache__

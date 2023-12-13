@@ -1,9 +1,10 @@
+from .audio import play_ringtone
+from .config_parse import Config
+
 from dataclasses import dataclass
-from audio import play_ringtone
 from plyer import notification
 from datetime import datetime
 from requests import Session
-from config_parse import Config
 from tzlocal import get_localzone_name
 import json as j
 import pytz

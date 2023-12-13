@@ -1,10 +1,8 @@
-"""PyAudio Example: Play a wave file."""
+from .config_parse import Config
 
 import wave
 import sounddevice as sd
 from sounddevice import DeviceList
-from config_parse import Config
-
 import pyaudio
 
 
@@ -35,12 +33,10 @@ def find_output():
 
 def play_ringtone():
     with wave.open("GeometryRingtone.wav", "rb") as wf:
-        # Instantiate PyAudio and initialize PortAudio system resources (1)
         p = pyaudio.PyAudio()
 
         out_dev = find_output()
 
-        # Open stream (2)
         stream = p.open(
             format=p.get_format_from_width(wf.getsampwidth()),
             channels=wf.getnchannels(),
