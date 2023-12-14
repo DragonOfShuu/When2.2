@@ -8,6 +8,7 @@ class ConfigObj:
     speaker_not_have: list[str]
     last_public_update: str | None
     last_beta_update: str | None
+    last_retrieval: str | None
     retrieve_new_data: bool = True
 
 

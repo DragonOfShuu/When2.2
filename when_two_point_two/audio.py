@@ -32,7 +32,7 @@ def find_output():
 
 
 def play_ringtone():
-    with wave.open("GeometryRingtone.wav", "rb") as wf:
+    with wave.open("assets/GeometryRingtone.wav", "rb") as wf:
         p = pyaudio.PyAudio()
 
         out_dev = find_output()

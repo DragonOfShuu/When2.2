@@ -3,5 +3,6 @@
 
 test_data.*
 *.log
+*.txt
 
 __pycache__

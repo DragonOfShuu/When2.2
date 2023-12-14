@@ -1,3 +1,4 @@
+from pathlib import Path
 from .audio import play_ringtone
 from .config_parse import Config
 
@@ -8,6 +9,7 @@ from requests import Session
 from tzlocal import get_localzone_name
 import json as j
 import pytz
+import os
 
 
 gd = 322170
@@ -82,12 +84,18 @@ def main():
     print(
         f"Last beta update: {beta_update_time.astimezone(pytz.timezone(get_localzone_name())).strftime('%B %d, %Y, %H:%M:%S')}"
     )
+    print(
+        f"The current time: {datetime.now().astimezone(pytz.timezone(get_localzone_name())).strftime('%B %d, %Y, %H:%M:%S')}"
+    )
 
     compare_public(public_update_time)
     compare_beta(beta_update_time)
+    Config.config.last_retrieval = datetime.now().isoformat()
+    Config.save()
 
 
 if __name__ == "__main__":
+
     try:
         main()
     except Exception as e:
