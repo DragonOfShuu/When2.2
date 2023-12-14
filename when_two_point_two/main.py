@@ -1,5 +1,4 @@
 from pathlib import Path
-from .audio import play_ringtone
 from .config_parse import Config
 
 from dataclasses import dataclass
@@ -9,7 +8,6 @@ from requests import Session
 from tzlocal import get_localzone_name
 import json as j
 import pytz
-import os
 
 
 gd = 322170
@@ -50,7 +48,12 @@ def compare_public(public_update_time: datetime):
             title="2.2 IS OUT NOW",
             message="I don't think I need to say much more",
         )
+        from .audio import play_ringtone
+
         play_ringtone()
+
+        with open(Path.home() / "2-2_OUT.txt", "w") as f:
+            f.write("2.2 is out now, congrats!")
 
     Config.config.last_public_update = public_update_time.isoformat()
     Config.save()
@@ -95,7 +98,6 @@ def main():
 
 
 if __name__ == "__main__":
-
     try:
         main()
     except Exception as e:
