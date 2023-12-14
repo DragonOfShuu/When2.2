@@ -52,7 +52,7 @@ def compare_public(public_update_time: datetime):
 
         play_ringtone()
 
-        with open(Path.home() / "2-2_OUT.txt", "w") as f:
+        with open(Path.home() / "Desktop" / "2-2_OUT.txt", "w") as f:
             f.write("2.2 is out now, congrats!")
 
     Config.config.last_public_update = public_update_time.isoformat()
