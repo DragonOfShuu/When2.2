@@ -1,5 +1,7 @@
 from dataclasses import dataclass, asdict, field
 import json as j
+from shutil import copy2
+import os
 
 
 @dataclass
@@ -24,6 +26,9 @@ class Config:
 
     @classmethod
     def load(cls):
+        if not os.path.exists("config.json"):
+            copy2("backup/config.json", "config.json")
+            
         with open("config.json") as c:
             config_dict = j.loads(c.read())
 
@@ -32,6 +37,7 @@ class Config:
 
     @classmethod
     def save(cls):
+        x = cls.config
         with open("config.json", "w") as c:
-            c.write(j.dumps(asdict(cls.config), indent=4))
+            c.write(j.dumps(asdict(x), indent=4))
         return cls._config

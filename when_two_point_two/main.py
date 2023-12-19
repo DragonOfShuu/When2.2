@@ -4,7 +4,7 @@ from .config_parse import Config
 from dataclasses import dataclass
 from plyer import notification
 from datetime import datetime
-from requests import Session
+from requests import Session, Response
 from tzlocal import get_localzone_name
 import json as j
 import pytz
@@ -20,17 +20,24 @@ class GDObj:
 
 
 def get_gd():
-    raw_data: dict
+    raw_data: Response|None = None
+    data_json: dict
     if Config.config.retrieve_new_data:
         with Session() as s:
-            raw_data = s.get(f"https://api.steamcmd.net/v1/info/{gd}").json()
+            try:
+                raw_data = s.get(f"https://api.steamcmd.net/v1/info/{gd}")
+                data_json = raw_data.json()
+            except Exception:
+                raw_data_str = '' if raw_data is None else f"\n{raw_data}"
+                raise Exception(f"There was a problem getting the information from steamcmd.{raw_data_str}")
+                
         with open("test_data.json", "w") as f:
-            f.write(j.dumps(raw_data, indent=4))
+            f.write(j.dumps(data_json, indent=4))
     else:
         with open("test_data.json", "r") as f:
-            raw_data = j.loads(f.read())
+            data_json = j.loads(f.read())
 
-    branches = raw_data["data"][str(gd)]["depots"]["branches"]
+    branches = data_json["data"][str(gd)]["depots"]["branches"]
 
     return GDObj(
         public_time=int(branches["public"]["timeupdated"]),

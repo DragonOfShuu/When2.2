@@ -4,5 +4,7 @@
 test_data.*
 *.log
 *.txt
+api_tests
+./config.json
 
 __pycache__
